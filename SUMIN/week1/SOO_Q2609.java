@@ -2,7 +2,7 @@ package SUMIN.week1;
 
 import java.util.Scanner;
 
-public class Q2609 {
+public class SOO_Q2609 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 

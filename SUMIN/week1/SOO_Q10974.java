@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Q10974 {
+public class SOO_Q10974 {
 
     public static int[] arr;
     public static boolean[] isVisit;
