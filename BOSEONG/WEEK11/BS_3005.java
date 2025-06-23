@@ -16,6 +16,7 @@ public class BS_3005 {
         int R = Integer.parseInt(st.nextToken());
         int C = Integer.parseInt(st.nextToken());
 
+        // 가로 세로 하나씩
         char[][] board = new char[R][C];
         for (int i = 0; i < R; i++) {
             board[i] = br.readLine().toCharArray();
