@@ -28,12 +28,6 @@ public class BS_17144 {
                 arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-
-       
-        // 여기까지 배열 채우기
-        // -1이 공기청정기 위치
-        
-
         for(int t = 0; t < T; t++){
             // 확산 시키기
             extend();
@@ -41,15 +35,14 @@ public class BS_17144 {
             clean();
         }
 
-
         // 여기서 확산 다하고 청소 다한 후 계산
         int answer = 0;
         for(int i = 0; i < R; i ++){
             for(int j = 0; j < C; j++){
-                //answer += arr[i][j];
-                System.out.print(arr[i][j] + " ");
+                if(arr[i][j] > 0) answer += arr[i][j];
+                //System.out.print(arr[i][j] + " ");
             }
-            System.out.println();
+            //System.out.println();
         }
         System.out.println(answer);
     }
@@ -85,12 +78,13 @@ public class BS_17144 {
                 }
             }
         }
+
         arr = copy;
     }
 
     static void clean(){
         List<int[]> xy = new ArrayList<>();
-
+        int[][] copy = new int[R][C];
         // x1 ~ y2 저장
         for(int i = 0; i < R; i++){
             if(arr[i][0] == -1) xy.add(new int[]{i,0});
@@ -101,10 +95,56 @@ public class BS_17144 {
         x2 = xy.get(1)[0];
         y2 = xy.get(1)[1];
 
-        // 위에 돌리기
-        
+        //위에 돌리기
+        //아래 가로 먼저
+        for(int i = 1; i < C - 1; i++){
+            copy[x1][i+1] = arr[x1][i];
+        }
+        // 다음 ^
+        for(int i = x1; i > 0; i --){
+            copy[i -1][C-1] = arr[i][C-1]; 
+        }
+        // 다음 <-
+        for(int i = C -1; i > 0; i--){
+            copy[0][i-1] = arr[0][i];
+        }
+        // 다음 아래로
+        for(int i = 1; i < x1; i++){
+            copy[i][0] = arr[i-1][0];
+        }
 
         // 아래 돌리기
+        // 위 가로 먼저
+        for(int i = 1; i < C - 1; i++){
+            copy[x2][i+1] = arr[x2][i];
+        }
+        //다음 아래로
+        for(int i = x2 ; i < R - 1; i++){
+            copy[i + 1][C-1] = arr[i][C-1];
+        }
+        // 다음 <-
+        for(int i = C - 1; i > 0; i--){
+            copy[R-1][i-1] = arr[R-1][i];
+        }
+        for(int i = R - 1; i > x2; i-- ){
+            copy[i-1][0] = arr[i][0]; 
+        }
 
+        // 이제 나머지 처리해주기
+        for(int i = 1; i < x1; i++){
+            for(int j = 1; j < C-1; j++){
+                copy[i][j] = arr[i][j];
+            }
+        }
+        for(int i = x2 + 1; i < R - 1; i++){
+            for(int j = 1; j < C-1; j++){
+                copy[i][j] = arr[i][j];
+            }
+        }
+
+        copy[x1][y1] = -1;
+        copy[x2][y2] = -1;
+
+        arr = copy;
     }
 }
